@@ -1,15 +1,21 @@
+import Alert from "./Alert/Alert";
 import styles from "./App.module.css";
 import Form from "./components/Form/Form";
+import Loader from "./components/Loader/Loader";
+import WeatherDetail from "./components/WeatherDetail/WeatherDetail";
 import useWeather from "./hooks/useWeather";
 function App() {
-  const { fetchWeather } = useWeather();
+  const { weather, loading, notFound, fetchWeather, hasWeatherData } =
+    useWeather();
   return (
     <>
       <h2 className={styles.title}>Buscador de clima</h2>
 
       <div className={styles.container}>
         <Form fetchWeather={fetchWeather} />
-        <p>2</p>
+        {loading && <Loader />}
+        {hasWeatherData && <WeatherDetail weather={weather} />}
+        {notFound && <Alert>Ciudad no encontrada</Alert>}
       </div>
     </>
   );
